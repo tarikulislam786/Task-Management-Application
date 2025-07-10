@@ -1,0 +1,26 @@
+<div class="row g-2 align-items-center mb-3">
+  <div class="col-md-3">
+    <select class="form-select" [(ngModel)]="filter.status" (change)="onFilterChange()">
+      <option value="">All Statuses</option>
+      <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select class="form-select" [(ngModel)]="filter.priority" (change)="onFilterChange()">
+      <option value="">All Priorities</option>
+      <option *ngFor="let p of priorities" [value]="p">{{ p }}</option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search by title or description"
+      [(ngModel)]="filter.search"
+      (input)="onFilterChange()"
+    />
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-outline-secondary w-100" (click)="onClear()">Clear Filters</button>
+  </div>
+</div>

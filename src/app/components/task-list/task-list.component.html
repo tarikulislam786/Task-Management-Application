@@ -1,0 +1,38 @@
+<p>task-list works!</p>
+<table class="table table-striped table-hover table-responsive">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Priority</th>
+      <th>Status</th>
+      <th>Due Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let task of sortedTasks()" [class.table-danger]="isOverdue(task)">
+      <td>{{ task.title }}</td>
+      <td>
+        <span
+          class="badge"
+          [ngClass]="{
+            'bg-danger': task.priority === 'High',
+            'bg-warning text-dark': task.priority === 'Medium',
+            'bg-success': task.priority === 'Low'
+          }"
+        >
+          {{ task.priority }}
+        </span>
+      </td>
+      <td>{{ task.status }}</td>
+      <td>
+        {{ task.dueDate | date: 'mediumDate' }}
+        <span *ngIf="isOverdue(task)" class="badge bg-danger ms-2">Overdue!</span>
+      </td>
+      <td>
+        <button class="btn btn-sm btn-primary me-1" (click)="onEdit(task)" [disabled]="task.status === 'Completed'">Edit</button>
+        <button class="btn btn-sm btn-danger" (click)="onDelete(task)" [disabled]="task.status === 'Completed'">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

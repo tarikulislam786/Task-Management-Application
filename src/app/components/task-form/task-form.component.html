@@ -1,0 +1,46 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <div class="mb-3">
+    <label for="title" class="form-label">Title *</label>
+    <input id="title" formControlName="title" type="text" class="form-control" />
+    <div *ngIf="f.title.touched && f.title.invalid" class="text-danger small">
+      <div *ngIf="f.title.errors?.required">Title is required.</div>
+      <div *ngIf="f.title.errors?.maxlength">Max 100 characters.</div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea id="description" formControlName="description" rows="3" class="form-control"></textarea>
+    <div *ngIf="f.description.touched && f.description.invalid" class="text-danger small">
+      <div *ngIf="f.description.errors?.maxlength">Max 500 characters.</div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="priority" class="form-label">Priority</label>
+    <select id="priority" formControlName="priority" class="form-select">
+      <option *ngFor="let p of priorities" [value]="p">{{p}}</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="status" class="form-label">Status</label>
+    <select id="status" formControlName="status" class="form-select" [disabled]="taskToEdit?.status === 'Completed'">
+      <option *ngFor="let s of statuses" [value]="s">{{s}}</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="dueDate" class="form-label">Due Date *</label>
+    <input id="dueDate" formControlName="dueDate" type="date" class="form-control" />
+    <div *ngIf="f.dueDate.touched && f.dueDate.invalid" class="text-danger small">
+      <div *ngIf="f.dueDate.errors?.required">Due date is required.</div>
+      <div *ngIf="f.dueDate.errors?.notFuture">Due date must be a future date.</div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary me-2" [disabled]="form.invalid">
+    {{ taskToEdit ? 'Update Task' : 'Save Task' }}
+  </button>
+  <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+</form>
